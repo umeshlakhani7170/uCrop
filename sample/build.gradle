@@ -1,28 +1,37 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdk 33
+    namespace 'com.yalantis.ucrop.sample'
+    compileSdk COMPILE_SDK_VERSION as int
+    buildToolsVersion = COMPILE_BUILD_TOOLS_VERSION as String
+
     defaultConfig {
         applicationId "com.yalantis.ucrop.sample"
-        minSdkVersion 14
-        targetSdkVersion 33
+        minSdkVersion MIN_SDK_VERSION as int
+        targetSdkVersion TARGET_SDK_VERSION as int
         versionCode 13
         versionName "1.2.4"
     }
-    flavorDimensions "default"
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
-    lintOptions {
+
+    lint {
         abortOnError false
     }
+    buildFeatures {
+        buildConfig = true
+    }
+    flavorDimensions "default"
     productFlavors {
         activity {
             buildConfigField("int","RequestMode", "1")
@@ -31,12 +40,15 @@ android {
             buildConfigField("int","RequestMode", "2")
         }
     }
+
+
 }
 
 dependencies {
-    implementation "androidx.appcompat:appcompat:${androidx_appcompat_version}"
-    implementation "androidx.core:core:${androidx_core_version}"
-    implementation "androidx.constraintlayout:constraintlayout:${constraintlayout_version}"
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.core:core:1.15.0'
+    implementation "androidx.constraintlayout:constraintlayout:2.2.0"
     implementation "com.squareup.okhttp3:okhttp:3.12.13"
     implementation project(':ucrop')
+    implementation(platform('org.jetbrains.kotlin:kotlin-bom:2.0.21'))
 }
